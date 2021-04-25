@@ -5,7 +5,7 @@ const arrowUpElement = document.querySelector(".up");
 const arrowLeftElement = document.querySelector(".left");
 const arrowDownElement = document.querySelector(".down");
 const arrowRightElement = document.querySelector(".right");
-const restartElement = document.querySelector(".restart_button");
+const restartElement = document.querySelector("#restart_button");
 const myStorage = window.localStorage;
 
 let boardState = {

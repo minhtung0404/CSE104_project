@@ -18,14 +18,18 @@
                 <h2 class="scores"></h2>
                 <h2 class="win"></h2>
             </div>
-            <div id="scoreboard">    
+            <div id="highscore">    
                 <h1>Highest</h1>
                 <h2 class="highest_score"></h2>
             </div>
-            <div id="restart">
-                <button class="restart_button">
+            <div id="instruction_and_newgame">
+                <button id="restart_button" class="button">
                     New game
                 </button>
+                <button class="button">
+                    How to play
+                </button>
+                <p class="hidden">Use your arrow keys (on keyboard or on screen) to move the tiles. Tiles with the same number merge into one when they touch. Add them up to reach 2048!</p>
             </div>
         </div>
     
@@ -55,7 +59,7 @@
                 <th id="cell_15" class="cell"></th>
             </tr>
         </table>
-        <div class="control">
+        <div class="control_arrow">
             <div class="first_row">
                     <img class = "arrow up" src="arrow.png" alt="arrow up">
             </div>
@@ -67,11 +71,6 @@
             <div class="third_row">
                 <img class="arrow down" src="arrow.png" alt = "arrow down">
             </div>
-        </div>
-    
-        <div id="how_to_play">
-            <h2>How to play</h2>
-            <p class="hidden">Use your arrow keys (on keyboard or on screen) to move the tiles. Tiles with the same number merge into one when they touch. Add them up to reach 2048!</p>
         </div>
     </div>
 </body>

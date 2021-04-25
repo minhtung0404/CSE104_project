@@ -19,25 +19,25 @@
     justify-content: space-between;
 }
 
-.restart_button{
+.button{
     display: flex;
     background-color: white;
     border: 1px solid green;
     font-size: 18px;
 }
 
-.restart_button:hover{
+.button:hover{
     background-color: lightgray;
 }
 
-#scoreboard, #restart{
+#scoreboard, #highscore, #instruction_and_newgame{
     display: inline-flex;
     flex-direction: column;
     align-items: center;
 }
 
-#restart{
-    justify-content: center;
+#instruction_and_newgame{
+    justify-content: space-around;
 }
 
 h1, h2{
@@ -49,7 +49,7 @@ h1, h2{
     flex-direction: row;
 }
 
-.control{
+.control_arrow{
     width: 150px;
 }
 
@@ -87,7 +87,7 @@ h1, h2{
     margin: auto;
 }
 
-.control, table{
+.control_arrow, table{
     margin: auto;
 }
 
