@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js" defer></script>
+    <title> 2048 </title>
+</head>
+
+<body>
+    <div id="main_game">
+        <div id="title">
+            <div id="scoreboard">    
+                <h1>Scores</h1>
+                <h2 class="scores"></h2>
+                <h2 class="win"></h2>
+            </div>
+            <div id="scoreboard">    
+                <h1>Highest</h1>
+                <h2 class="highest_score"></h2>
+            </div>
+            <div id="restart">
+                <button class="restart_button">
+                    New game
+                </button>
+            </div>
+        </div>
+    
+        <table>
+            <tr class="row">
+                <th id="cell_0" class="cell"></th>
+                <th id="cell_1" class="cell"></th>
+                <th id="cell_2" class="cell"></th>
+                <th id="cell_3" class="cell"></th>
+            </tr>
+            <tr class="row">
+                <th id="cell_4" class="cell"></th>
+                <th id="cell_5" class="cell"></th>
+                <th id="cell_6" class="cell"></th>
+                <th id="cell_7" class="cell"></th>
+            </tr>
+            <tr class="row">
+                <th id="cell_8" class="cell"></th>
+                <th id="cell_9" class="cell"></th>
+                <th id="cell_10" class="cell"></th>
+                <th id="cell_11" class="cell"></th>
+            </tr>
+            <tr class="row">
+                <th id="cell_12" class="cell"></th>
+                <th id="cell_13" class="cell"></th>
+                <th id="cell_14" class="cell"></th>
+                <th id="cell_15" class="cell"></th>
+            </tr>
+        </table>
+        <div class="control">
+            <div class="first_row">
+                    <img class = "arrow up" src="arrow.png" alt="arrow up">
+            </div>
+            <div class="second_row">
+                <img class="arrow left" src="arrow.png" alt = "arrow left">
+                <div class="empty_box"></div>
+                <img class="arrow right" src="arrow.png" alt = "arrow right">
+            </div>
+            <div class="third_row">
+                <img class="arrow down" src="arrow.png" alt = "arrow down">
+            </div>
+        </div>
+    
+        <div id="how_to_play">
+            <h2>How to play</h2>
+            <p class="hidden">Use your arrow keys (on keyboard or on screen) to move the tiles. Tiles with the same number merge into one when they touch. Add them up to reach 2048!</p>
+        </div>
+    </div>
+</body>
+
+</html>
