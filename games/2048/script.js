@@ -225,7 +225,10 @@ function new_element(){
 }
 
 function check_endgame(){
-    if (!is_win() && !is_end()) return;
+    if (!is_win() && !is_end()) {
+        winElement.textContent = "";
+        return;
+    }
     if (is_win()) winElement.textContent = "You win!";
     else winElement.textContent = "You lose!";
 
