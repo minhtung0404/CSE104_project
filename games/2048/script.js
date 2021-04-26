@@ -42,22 +42,40 @@ function _rightEvent(event){
     mergeEvent(event, "ArrowRight");
 }
 
-function _howtoplayEvent(event){
-    console.log("how to play");
-    requestAnimationFrame(howtoplayDisappearFrame);
+function _howtoplayAppearEvent(event){
+    console.log("how to play appear");
+    requestAnimationFrame(tableDisappearFrame);
 }
 
-function howtoplayDisappearFrame(currentTime){
+function _howtoplayDisappearEvent(event){
+    console.log("how to play disappear");
+    document.querySelector(".instruction").style.opacity = 0;
+    requestAnimationFrame(tableAppearFrame);
+}
+
+function tableDisappearFrame(currentTime){
     const tableElement = document.querySelector("table");
     if (tableElement.style.opacity === "") tableElement.style.opacity = 1;
-    if (tableElement.style.opacity <= '0.0') return;
-    tableElement.style.opacity = parseFloat(tableElement.style.opacity) - 0.03;
-    requestAnimationFrame(howtoplayDisappearFrame);
+    if (parseFloat(tableElement.style.opacity) <= 0) {
+        document.querySelector(".instruction").style.opacity = 1;
+        return;
+    }
+    tableElement.style.opacity = parseFloat(tableElement.style.opacity) - 0.01;
+    requestAnimationFrame(tableDisappearFrame);
+}
+
+function tableAppearFrame(currentTime){
+    const tableElement = document.querySelector("table");
+    if (tableElement.style.opacity === "") tableElement.style.opacity = 1;
+    if (parseFloat(tableElement.style.opacity) >= 1) return;
+    tableElement.style.opacity = parseFloat(tableElement.style.opacity) + 0.01;
+    requestAnimationFrame(tableAppearFrame);
 }
 
 function main(){
     restartElement.addEventListener("click", (event) => {new_game();});
-    howtoplayElement.addEventListener("mouseover", _howtoplayEvent);
+    howtoplayElement.addEventListener("mouseover", _howtoplayAppearEvent);
+    howtoplayElement.addEventListener("mouseout", _howtoplayDisappearEvent);
 
     window.addEventListener("keydown", function(e) {
         if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
