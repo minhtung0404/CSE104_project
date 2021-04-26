@@ -49,14 +49,14 @@ function _rightEvent(event){
 
 function _howtoplayAppearEvent(event){
     console.log("how to play appear");
-    howtoplay.appear += 100;
+    howtoplay.appear += 50;
     requestAnimationFrame(howtoplayAppear);
 }
 
 function _howtoplayDisappearEvent(event){
     console.log("how to play disappear");
     document.querySelector(".instruction").style.opacity = 0;
-    howtoplay.disappear += 100;
+    howtoplay.disappear += 50;
     requestAnimationFrame(howtoplayDisappear);
 }
 
@@ -66,7 +66,7 @@ function howtoplayAppear(currentTime){
         if (parseFloat(tableElement.style.opacity) <= 0) document.querySelector(".instruction").style.opacity = 1;
         return;
     }
-    tableElement.style.opacity = parseFloat(tableElement.style.opacity) - 0.01;
+    tableElement.style.opacity = parseFloat(tableElement.style.opacity) - 0.02;
     howtoplay.appear--;
     requestAnimationFrame(howtoplayAppear);
 }
@@ -74,7 +74,7 @@ function howtoplayAppear(currentTime){
 function howtoplayDisappear(currentTime){
     const tableElement = document.querySelector("table");
     if (howtoplay.disappear === 0) return;
-    tableElement.style.opacity = parseFloat(tableElement.style.opacity) + 0.01;  
+    tableElement.style.opacity = parseFloat(tableElement.style.opacity) + 0.02;  
     howtoplay.disappear--; 
     requestAnimationFrame(howtoplayDisappear);
 }
