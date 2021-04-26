@@ -25,6 +25,7 @@ function main(){
 
     document.querySelector("#restart_button").addEventListener("click", (event) => {new_game();});
     document.querySelector("#try_again").addEventListener("click", (event) => {new_game();});
+    document.querySelector("#show_arrow").addEventListener("click", showArrowClickEvent);
     howtoplayElement.addEventListener("mouseover", _howtoplayAppearEvent);
     howtoplayElement.addEventListener("mouseout", _howtoplayDisappearEvent);
 
@@ -46,6 +47,17 @@ function main(){
     }
     else {
         new_game();
+    }
+}
+
+function showArrowClickEvent(event){
+    const controlArrowElement = document.querySelector('.control_arrow');
+
+    if (controlArrowElement.style.display === 'none'){
+        controlArrowElement.style.display = "block";
+    }
+    else{
+        controlArrowElement.style.display = "none";
     }
 }
 
