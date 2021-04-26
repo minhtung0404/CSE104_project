@@ -84,13 +84,13 @@ function _rightEvent(event){
 }
 
 function _howtoplayAppearEvent(event){
-    console.log("how to play appear");
+    if (!is_end() && !is_win()) removeMoveEventListener();
     howtoplay.appear += 50;
     requestAnimationFrame(howtoplayAppear);
 }
 
 function _howtoplayDisappearEvent(event){
-    console.log("how to play disappear");
+    if (!is_end() && !is_win()) addMoveEventListener();
     document.querySelector(".instruction").style.opacity = 0;
     howtoplay.disappear += 50;
     requestAnimationFrame(howtoplayDisappear);
@@ -125,6 +125,14 @@ function addMoveEventListener(){
     arrowLeftElement.addEventListener("click", _leftEvent);
     arrowDownElement.addEventListener("click", _downEvent);
     arrowRightElement.addEventListener("click", _rightEvent);
+}
+
+function removeMoveEventListener(){
+    document.removeEventListener("keydown", _keyboardEvent);
+    arrowUpElement.removeEventListener("click", _upEvent);
+    arrowLeftElement.removeEventListener("click", _leftEvent);
+    arrowDownElement.removeEventListener("click", _downEvent);
+    arrowRightElement.removeEventListener("click", _rightEvent);
 }
 
 function new_game(){
@@ -290,9 +298,5 @@ function check_endgame(){
 
     winElement.style.display = "flex";
 
-    document.removeEventListener("keydown", _keyboardEvent);
-    arrowUpElement.removeEventListener("click", _upEvent);
-    arrowLeftElement.removeEventListener("click", _leftEvent);
-    arrowDownElement.removeEventListener("click", _downEvent);
-    arrowRightElement.removeEventListener("click", _rightEvent);
+    removeMoveEventListener();
 }

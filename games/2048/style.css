@@ -2,6 +2,14 @@ body{
     background-color: #FAF8EF;
 }
 
+.instruction *{
+    text-align: justify;
+}
+
+.instruction h2{
+    margin-left: 0px;
+}
+
 .win{
     position: absolute;
     left: 0px;
@@ -46,12 +54,22 @@ table{
 
 .board{
     position: relative;
+
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .instruction{
     position: absolute;
     left: 0px;
     top: 0px;
+
+    background-color: #EFE2BA;
+
+    border: 3px solid gray;
+    border-radius: 30px;
+
+    padding: 10px;
 }
 
 #title{
@@ -61,10 +79,12 @@ table{
 
 .button{
     display: flex;
-    background-color: white;
-    border: 1px solid green;
+    background-color: #EFE2BA;
+    border: 1px solid #D79922;
     border-radius: 5px;
     font-size: 18px;
+    width: 120px;
+    justify-content: center;
 }
 
 .button:hover{

@@ -29,13 +29,23 @@
                     How to play
                 </button>
                 <button id="show_arrow" class="button">
-                    Show arrow
+                    Show keys
                 </button>
             </div>
         </div>
 
         <div class="board">
-            <p style="opacity: 0;" class="instruction">Use your arrow keys (on keyboard or on screen) to move the tiles. Tiles with the same number merge into one when they touch. Add them up to reach 2048!</p>
+            <div style="opacity: 0;" class="instruction">
+                <h1 style="text-align: center;">How to play</h1>
+                <h2>How the game works</h2>
+                <p>You can move the board in for directions: up, down, left, right</p>
+                <p>Tiles with the same number merge into one when they touch.</p>
+                <p><b>Your goal</b>: Add them up to reach 2048!</p>
+
+                <h2>How to control</h2>
+                <p>You can press the <b>"Show keys"</b> button to show the arrow control on screen (for phone user)</p>
+                <p>Use your arrow keys (or the arrows on the screen) to move the tiles.</p> 
+            </div>
 
             <div id="game_board" style="opacity: 1;">
                 <div class="win">
@@ -80,7 +90,7 @@
             </div>
             <div class="second_row">
                 <img class="arrow left" src="arrow.png" alt = "arrow left">
-                <div class="empty_box"></div>
+                <img class="empty_box" src="2048_logo.png"></img>
                 <img class="arrow right" src="arrow.png" alt = "arrow right">
             </div>
             <div class="third_row">
