@@ -6,6 +6,7 @@ const arrowLeftElement = document.querySelector(".left");
 const arrowDownElement = document.querySelector(".down");
 const arrowRightElement = document.querySelector(".right");
 const restartElement = document.querySelector("#restart_button");
+const howtoplayElement = document.querySelector('#how_to_play');
 const myStorage = window.localStorage;
 
 let boardState = {
@@ -41,8 +42,22 @@ function _rightEvent(event){
     mergeEvent(event, "ArrowRight");
 }
 
+function _howtoplayEvent(event){
+    console.log("how to play");
+    requestAnimationFrame(howtoplayDisappearFrame);
+}
+
+function howtoplayDisappearFrame(currentTime){
+    const tableElement = document.querySelector("table");
+    if (tableElement.style.opacity === "") tableElement.style.opacity = 1;
+    if (tableElement.style.opacity <= '0.0') return;
+    tableElement.style.opacity = parseFloat(tableElement.style.opacity) - 0.03;
+    requestAnimationFrame(howtoplayDisappearFrame);
+}
+
 function main(){
     restartElement.addEventListener("click", (event) => {new_game();});
+    howtoplayElement.addEventListener("mouseover", _howtoplayEvent);
 
     window.addEventListener("keydown", function(e) {
         if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {

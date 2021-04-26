@@ -96,7 +96,7 @@ h1, h2{
     display: none;
 }
 
-#how_to_play:hover .hidden{
+#how_to_play:hover + .hidden{
     display: block;
     position: absolute;
     top: 0px;
