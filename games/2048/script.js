@@ -9,7 +9,7 @@ const restartElement = document.querySelector("#restart_button");
 const howtoplayElement = document.querySelector('#how_to_play');
 const myStorage = window.localStorage;
 
-const color = ["rgba(238, 228, 218, 0.35)", "#eee4da", "#ede0c8", "#f2b179", "#f59563", "#f67c5f", "#f65e3b", "#edcf72", "#edcc61", "#edc850", "#edc53f", "#edc22e"];
+const color = ["#CDC1B4", "#eee4da", "#ede0c8", "#f2b179", "#f59563", "#f67c5f", "#f65e3b", "#edcf72", "#edcc61", "#edc850", "#edc53f", "#edc22e"];
 const textColorGreater3 = "#f9f6f2";
 
 let boardState = {
@@ -270,7 +270,7 @@ function check_endgame(){
         return;
     }
     if (is_win()) winElement.textContent = "You win!";
-    else winElement.textContent = "You lose!";
+    else winElement.textContent = "Game over!";
 
     document.removeEventListener("keydown", _keyboardEvent);
     arrowUpElement.removeEventListener("click", _upEvent);
