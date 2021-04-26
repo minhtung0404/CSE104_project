@@ -1,12 +1,7 @@
-const scoreElement = document.querySelector('.scores');
-const highestscoreElement = document.querySelector('.highest_score');
-const winElement = document.querySelector(".win");
 const arrowUpElement = document.querySelector(".up");
 const arrowLeftElement = document.querySelector(".left");
 const arrowDownElement = document.querySelector(".down");
 const arrowRightElement = document.querySelector(".right");
-const restartElement = document.querySelector("#restart_button");
-const howtoplayElement = document.querySelector('#how_to_play');
 const myStorage = window.localStorage;
 
 const color = ["#CDC1B4", "#eee4da", "#ede0c8", "#f2b179", "#f59563", "#f67c5f", "#f65e3b", "#edcf72", "#edcc61", "#edc850", "#edc53f", "#edc22e"];
@@ -24,6 +19,35 @@ let howtoplay = {
 }
 
 main();
+
+function main(){
+    const howtoplayElement = document.querySelector('#how_to_play');
+
+    document.querySelector("#restart_button").addEventListener("click", (event) => {new_game();});
+    document.querySelector("#try_again").addEventListener("click", (event) => {new_game();});
+    howtoplayElement.addEventListener("mouseover", _howtoplayAppearEvent);
+    howtoplayElement.addEventListener("mouseout", _howtoplayDisappearEvent);
+
+    window.addEventListener("keydown", function(e) {
+        if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+            e.preventDefault();
+        }
+    }, false);
+
+    document.addEventListener("keydown", (event) => {
+        let key = event.key || event.keyCode;
+        if (key == 'r' || key === 82) new_game();
+    });
+
+    if (myStorage.getItem("boardState") !== null){
+        boardState = JSON.parse(myStorage.getItem("boardState"));
+        if (!is_end() && !is_win()) addMoveEventListener();
+        update_board();
+    }
+    else {
+        new_game();
+    }
+}
 
 function _keyboardEvent(event) {
     let key = event.key || event.keyCode;
@@ -61,48 +85,22 @@ function _howtoplayDisappearEvent(event){
 }
 
 function howtoplayAppear(currentTime){
-    const tableElement = document.querySelector("table");
+    const boardElement = document.querySelector("#game_board");
     if (howtoplay.appear === 0) {
-        if (parseFloat(tableElement.style.opacity) <= 0) document.querySelector(".instruction").style.opacity = 1;
+        if (parseFloat(boardElement.style.opacity) <= 0) document.querySelector(".instruction").style.opacity = 1;
         return;
     }
-    tableElement.style.opacity = parseFloat(tableElement.style.opacity) - 0.02;
+    boardElement.style.opacity = parseFloat(boardElement.style.opacity) - 0.02;
     howtoplay.appear--;
     requestAnimationFrame(howtoplayAppear);
 }
 
 function howtoplayDisappear(currentTime){
-    const tableElement = document.querySelector("table");
+    const boardElement = document.querySelector("#game_board");
     if (howtoplay.disappear === 0) return;
-    tableElement.style.opacity = parseFloat(tableElement.style.opacity) + 0.02;  
+    boardElement.style.opacity = parseFloat(boardElement.style.opacity) + 0.02;  
     howtoplay.disappear--; 
     requestAnimationFrame(howtoplayDisappear);
-}
-
-function main(){
-    restartElement.addEventListener("click", (event) => {new_game();});
-    howtoplayElement.addEventListener("mouseover", _howtoplayAppearEvent);
-    howtoplayElement.addEventListener("mouseout", _howtoplayDisappearEvent);
-
-    window.addEventListener("keydown", function(e) {
-        if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
-            e.preventDefault();
-        }
-    }, false);
-
-    document.addEventListener("keydown", (event) => {
-        let key = event.key || event.keyCode;
-        if (key == 'r' || key === 82) new_game();
-    });
-
-    if (myStorage.getItem("boardState") !== null){
-        boardState = JSON.parse(myStorage.getItem("boardState"));
-        if (!is_end() && !is_win()) addMoveEventListener();
-        update_board();
-    }
-    else {
-        new_game();
-    }
 }
 
 function save_state(){
@@ -232,6 +230,9 @@ function is_win(){
 }
 
 function update_board(){
+    const scoreElement = document.querySelector('.scores');
+    const highestscoreElement = document.querySelector('.highest_score');
+
     for (let i = 0; i < 4; i++){
         for (let j = 0; j < 4; j++){
             let id = "#cell_" + (i * 4 + j).toString();
@@ -265,12 +266,17 @@ function new_element(){
 }
 
 function check_endgame(){
+    const winElement = document.querySelector(".win");
+    const textWinElement = winElement.querySelector("p");
     if (!is_win() && !is_end()) {
-        winElement.textContent = "";
+        textWinElement.textContent = "";
+        winElement.style.display = "none";
         return;
     }
-    if (is_win()) winElement.textContent = "You win!";
-    else winElement.textContent = "Game over!";
+    if (is_win()) textWinElement.textContent = "Victory!";
+    else textWinElement.textContent = "Game over!";
+
+    winElement.style.display = "flex";
 
     document.removeEventListener("keydown", _keyboardEvent);
     arrowUpElement.removeEventListener("click", _upEvent);
