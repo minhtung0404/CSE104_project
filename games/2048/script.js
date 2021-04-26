@@ -9,14 +9,19 @@ const restartElement = document.querySelector("#restart_button");
 const howtoplayElement = document.querySelector('#how_to_play');
 const myStorage = window.localStorage;
 
+const color = ["rgba(238, 228, 218, 0.35)", "#eee4da", "#ede0c8", "#f2b179", "#f59563", "#f67c5f", "#f65e3b", "#edcf72", "#edcc61", "#edc850", "#edc53f", "#edc22e"];
+const textColorGreater3 = "#f9f6f2";
+
 let boardState = {
     val : [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
     score : 0,
     highestScore: 0,
 };
 
-let color = ["rgba(238, 228, 218, 0.35)", "#eee4da", "#ede0c8", "#f2b179", "#f59563", "#f67c5f", "#f65e3b", "#edcf72", "#edcc61", "#edc850", "#edc53f", "#edc22e"];
-let textColorGreater3 = "#f9f6f2";
+let howtoplay = {
+    appear: 0,
+    disappear: 0
+}
 
 main();
 
@@ -44,32 +49,34 @@ function _rightEvent(event){
 
 function _howtoplayAppearEvent(event){
     console.log("how to play appear");
-    requestAnimationFrame(tableDisappearFrame);
+    howtoplay.appear += 100;
+    requestAnimationFrame(howtoplayAppear);
 }
 
 function _howtoplayDisappearEvent(event){
     console.log("how to play disappear");
     document.querySelector(".instruction").style.opacity = 0;
-    requestAnimationFrame(tableAppearFrame);
+    howtoplay.disappear += 100;
+    requestAnimationFrame(howtoplayDisappear);
 }
 
-function tableDisappearFrame(currentTime){
+function howtoplayAppear(currentTime){
     const tableElement = document.querySelector("table");
-    if (tableElement.style.opacity === "") tableElement.style.opacity = 1;
-    if (parseFloat(tableElement.style.opacity) <= 0) {
-        document.querySelector(".instruction").style.opacity = 1;
+    if (howtoplay.appear === 0) {
+        if (parseFloat(tableElement.style.opacity) <= 0) document.querySelector(".instruction").style.opacity = 1;
         return;
     }
     tableElement.style.opacity = parseFloat(tableElement.style.opacity) - 0.01;
-    requestAnimationFrame(tableDisappearFrame);
+    howtoplay.appear--;
+    requestAnimationFrame(howtoplayAppear);
 }
 
-function tableAppearFrame(currentTime){
+function howtoplayDisappear(currentTime){
     const tableElement = document.querySelector("table");
-    if (tableElement.style.opacity === "") tableElement.style.opacity = 1;
-    if (parseFloat(tableElement.style.opacity) >= 1) return;
-    tableElement.style.opacity = parseFloat(tableElement.style.opacity) + 0.01;
-    requestAnimationFrame(tableAppearFrame);
+    if (howtoplay.disappear === 0) return;
+    tableElement.style.opacity = parseFloat(tableElement.style.opacity) + 0.01;  
+    howtoplay.disappear--; 
+    requestAnimationFrame(howtoplayDisappear);
 }
 
 function main(){
