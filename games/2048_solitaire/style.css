@@ -1,4 +1,124 @@
 body{
-
     background-color: #FAF8EF;
+}
+
+.column{
+    display: inline-flex;
+
+    position: relative;
+
+    margin: 0px;
+    width: 100px;
+    height: 800px;
+}
+
+.card{
+    position: absolute;
+
+    width: 90px;
+    height: 120px;
+
+    margin: 0px 2px 0px 2px;
+
+    border: 3px solid #FAF8EF;
+    border-radius: 15px;
+    
+    background-color: lightgray;
+}
+
+.card_number{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 20px;
+
+    margin: 0px;
+}
+
+#body{
+    display: flex;
+
+    height: 430px;
+
+    border-bottom: 3px dashed #D79922;
+}
+
+#instruction_and_newgame{
+    display: inline-flex;
+    flex-direction: row;
+
+    margin-top: 10px;
+    
+    justify-content: space-between;
+}
+
+.button{
+    display: flex;
+    background-color: #EFE2BA;
+    border: 1px solid #D79922;
+    border-radius: 5px;
+    font-size: 18px;
+    width: 120px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover{
+    background-color: lightgray;
+}
+
+#crown{
+    width: 25px;
+    height: 25px;
+}
+
+#score{
+    justify-content: center;
+    margin: 0px;
+}
+
+#score_number{
+    font-size: 40px;
+    font-weight: bold;
+
+    margin: 0px;
+    margin-bottom: 10px;
+
+    text-align: center;
+}
+
+#best_score{
+    display: flex;
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    
+    font-size: 23px;
+    font-weight: bold;
+}
+
+#best_score_number{
+    display: inline-block;
+    margin: 0px;
+    margin-left: 10px;
+}
+
+#head{
+    display: flex;
+    position: relative;
+    height: 100px;
+
+    flex-direction: column;
+    
+    justify-content: flex-end;
+}
+
+#main_game{
+    width: 400px;
+    margin: auto;
 }
