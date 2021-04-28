@@ -1,36 +1,4 @@
 body{
-    display: flex;
-
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
     background-color: #FAF8EF;
-}
-
-a, #choose{
-    display: flex;
-
-    background-color: #EFE2BA;
-    border: 2px solid black;
-    border-radius: 10px;
-
-    color: black;
-    font-size: 20px;
-
-    justify-content: center;
-    align-items: center;
-
-    text-decoration: none;
-}
-
-#choose{
-    width: 400px;
-    padding: 10px;
-}
-
-a{
-    width: 150px;
-    height: 30px;
-    margin: 30px;
 }
