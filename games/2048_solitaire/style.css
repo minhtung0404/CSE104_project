@@ -1,13 +1,9 @@
 body{
-    background-color: #FAF8EF;
+    background-color: #001a33;
 }
 
 .column{
-    display: inline-flex;
-
     position: relative;
-
-    margin: 0px;
     width: 100px;
     height: 800px;
 }
@@ -20,10 +16,10 @@ body{
 
     margin: 0px 2px 0px 2px;
 
-    border: 3px solid #FAF8EF;
+    border: 3px solid black;
     border-radius: 15px;
-    
-    background-color: lightgray;
+
+    background-color: gray;
 }
 
 .card_number{
@@ -34,7 +30,9 @@ body{
     font-family: Arial;
     font-weight: bold;
     font-size: 20px;
-
+    /*
+    tại sao lại nghĩ ra để margin = 0?
+    */
     margin: 0px;
 }
 
@@ -51,20 +49,17 @@ body{
     flex-direction: row;
 
     margin-top: 10px;
-    
+
     justify-content: space-between;
 }
 
 .button{
-    display: flex;
     background-color: #EFE2BA;
     border: 1px solid #D79922;
     border-radius: 5px;
     font-size: 18px;
     width: 120px;
     height: 40px;
-    justify-content: center;
-    align-items: center;
 }
 
 .button:hover{
@@ -77,34 +72,42 @@ body{
 }
 
 #score{
-    justify-content: center;
     margin: 0px;
 }
 
 #score_number{
     font-size: 40px;
     font-weight: bold;
-
+    /*
+    tại sao lại nghĩ ra để margin = 0?
+    */
     margin: 0px;
     margin-bottom: 10px;
 
     text-align: center;
+
+    color: white;
 }
 
 #best_score{
     display: flex;
-
     position: absolute;
     top: 0px;
+/*
+cái này có còn là flex item nữa không?
+*/
     left: 0px;
-    
     font-size: 23px;
     font-weight: bold;
 }
 
 #best_score_number{
     display: inline-block;
+    color: white;
     margin: 0px;
+    /*
+    tại sao lại nghĩ ra để margin = 0?
+    */
     margin-left: 10px;
 }
 
@@ -114,11 +117,63 @@ body{
     height: 100px;
 
     flex-direction: column;
-    
+
     justify-content: flex-end;
 }
 
 #main_game{
     width: 400px;
     margin: auto;
+}
+
+.card_tail{
+    position: absolute;
+    width: 90px;
+    height: 120px;
+
+    margin: 0px 2px 0px 2px;
+
+    border: 3px solid black;
+    border-radius: 15px;
+
+    background-color: gray;
+}
+
+.card_tail_X {
+    color: white;
+
+    position: absolute;
+    top: 5px;
+    left: 30px;
+
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 40px;
+    /*
+    tại sao lại nghĩ ra để margin = 0?
+    */
+    margin: 0px;
+}
+
+.card_tail_discard {
+    color: white;
+
+    position: absolute;
+    left: 5px;
+
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 18px;
+    /*
+    tại sao lại nghĩ ra để margin = 0?
+    */
+    margin: 0px;
+}
+
+#tail{
+  position: relative;
+  margin-top: 30px;
+  background: yellow;
+  display: inline-flex;
+  flex-direction: row;
 }
