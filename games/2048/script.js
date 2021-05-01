@@ -1,3 +1,5 @@
+"use strict";
+
 const arrowUpElement = document.querySelector(".up");
 const arrowLeftElement = document.querySelector(".left");
 const arrowDownElement = document.querySelector(".down");
@@ -179,8 +181,8 @@ function tranpose(){
 }
 
 function merge_row(arr){
-    cur = 0;
-    ans = [0, 0, 0, 0];
+    let cur = 0;
+    let ans = [0, 0, 0, 0];
     for (let i = 0; i < 4; i++){
         if (arr[i] != 0){
             if (ans[cur] === 0) ans[cur] = arr[i];
@@ -192,8 +194,8 @@ function merge_row(arr){
 }
 
 function check_merge_row(arr){
-    cur = 0;
-    ans = [0, 0, 0, 0];
+    let cur = 0;
+    let ans = [0, 0, 0, 0];
     for (let i = 0; i < 4; i++){
         if (arr[i] != 0){
             if (ans[cur] === 0) ans[cur] = arr[i];
@@ -208,7 +210,7 @@ function merge_board(){
     let ck = false;
 
     for (let i = 0; i < 4; i++) {
-        new_row = merge_row(boardState.val[i]);
+        let new_row = merge_row(boardState.val[i]);
         for (let j = 0; j < 4; j++) if (boardState.val[i][j] !== new_row[j]) ck = true, boardState.val[i][j] = new_row[j];
     }
 
@@ -217,7 +219,7 @@ function merge_board(){
 
 function merge_board_check(){
     for (let i = 0; i < 4; i++) {
-        new_row = check_merge_row(boardState.val[i]);
+        let new_row = check_merge_row(boardState.val[i]);
         for (let j = 0; j < 4; j++) if (boardState.val[i][j] !== new_row[j]) return true;
     }
 
