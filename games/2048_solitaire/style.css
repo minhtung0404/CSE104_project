@@ -5,7 +5,7 @@ body{
 .column{
     position: relative;
     width: 100px;
-    height: 800px;
+    height: 100%;
 }
 
 .card{
@@ -30,9 +30,6 @@ body{
     font-family: Arial;
     font-weight: bold;
     font-size: 20px;
-    /*
-    tại sao lại nghĩ ra để margin = 0?
-    */
     margin: 0px;
 }
 
@@ -47,8 +44,6 @@ body{
 #instruction_and_newgame{
     display: inline-flex;
     flex-direction: row;
-
-    margin-top: 10px;
 
     justify-content: space-between;
 }
@@ -78,9 +73,6 @@ body{
 #score_number{
     font-size: 40px;
     font-weight: bold;
-    /*
-    tại sao lại nghĩ ra để margin = 0?
-    */
     margin: 0px;
     margin-bottom: 10px;
 
@@ -93,9 +85,6 @@ body{
     display: flex;
     position: absolute;
     top: 0px;
-/*
-cái này có còn là flex item nữa không?
-*/
     left: 0px;
     font-size: 23px;
     font-weight: bold;
@@ -105,9 +94,6 @@ cái này có còn là flex item nữa không?
     display: inline-block;
     color: white;
     margin: 0px;
-    /*
-    tại sao lại nghĩ ra để margin = 0?
-    */
     margin-left: 10px;
 }
 
@@ -149,9 +135,6 @@ cái này có còn là flex item nữa không?
     font-family: Arial;
     font-weight: bold;
     font-size: 40px;
-    /*
-    tại sao lại nghĩ ra để margin = 0?
-    */
     margin: 0px;
 }
 
@@ -164,9 +147,6 @@ cái này có còn là flex item nữa không?
     font-family: Arial;
     font-weight: bold;
     font-size: 18px;
-    /*
-    tại sao lại nghĩ ra để margin = 0?
-    */
     margin: 0px;
 }
 
