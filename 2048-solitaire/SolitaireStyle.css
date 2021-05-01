@@ -1,0 +1,50 @@
+body {
+  background: #001a33;
+}
+
+.score {
+  text-align: center;
+  font-size: 2.8em;
+  color: white;
+  font-weight: bold;
+}
+
+.screen {
+  width: 75vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cards_container {
+  /*align-items: stretch;*/
+  display: flex;
+  justify-content: space-evenly;
+  height: 25vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cards {
+  background-color: grey;
+  border: 2px solid white;
+  text-align: center;
+  font-size: 1.5em;
+  margin: 5px;
+  width: 100px;
+  height: 150px;
+  border-radius: 10px;
+}
+
+.players {
+  position: relative;
+  top: 150px;
+}
+
+hr {
+  height:2px;
+  border-width:0;
+  border-top: 1px dashed grey;
+  color:gray;
+  border-style: dashed;
+  background-color:gray
+}
