@@ -36,7 +36,7 @@ body{
 #body{
     display: flex;
 
-    height: 430px;
+    height: 340px;
 
     border-bottom: 3px dashed #D79922;
 }
