@@ -55,11 +55,11 @@ function main(){
 function showArrowClickEvent(event){
     const controlArrowElement = document.querySelector('.control_arrow');
 
-    if (controlArrowElement.style.display === 'none'){
-        controlArrowElement.style.display = "block";
+    if (controlArrowElement.classList.contains("hidden")){
+        controlArrowElement.classList.remove("hidden");
     }
     else{
-        controlArrowElement.style.display = "none";
+        controlArrowElement.classList.add("hidden");
     }
 }
 
@@ -93,26 +93,32 @@ function _howtoplayAppearEvent(event){
 
 function _howtoplayDisappearEvent(event){
     if (!is_end() && !is_win()) addMoveEventListener();
-    document.querySelector(".instruction").style.opacity = 0;
+    document.querySelector("#instruction").style.opacity = 0;
     howtoplay.disappear += 50;
     requestAnimationFrame(howtoplayDisappear);
 }
 
 function howtoplayAppear(currentTime){
     const boardElement = document.querySelector("#game_board");
+    const controlElement = document.querySelector(".control_arrow");
     if (howtoplay.appear === 0) {
-        if (parseFloat(boardElement.style.opacity) <= 0) document.querySelector(".instruction").style.opacity = 1;
+        if (parseFloat(boardElement.style.opacity) <= 0) {
+            document.querySelector("#instruction").style.opacity = 1;
+        }
         return;
     }
     boardElement.style.opacity = parseFloat(boardElement.style.opacity) - 0.02;
+    controlElement.style.opacity = parseFloat(controlElement.style.opacity) - 0.02;
     howtoplay.appear--;
     requestAnimationFrame(howtoplayAppear);
 }
 
 function howtoplayDisappear(currentTime){
     const boardElement = document.querySelector("#game_board");
+    const controlElement = document.querySelector(".control_arrow");
     if (howtoplay.disappear === 0) return;
-    boardElement.style.opacity = parseFloat(boardElement.style.opacity) + 0.02;  
+    boardElement.style.opacity = parseFloat(boardElement.style.opacity) + 0.02;
+    controlElement.style.opacity = parseFloat(controlElement.style.opacity) + 0.02;  
     howtoplay.disappear--; 
     requestAnimationFrame(howtoplayDisappear);
 }

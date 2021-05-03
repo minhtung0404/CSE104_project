@@ -22,7 +22,7 @@
                 <h1>Highest</h1>
                 <h2 class="highest_score">0</h2>
             </div>
-            <div id="instruction_and_newgame">
+            <div id="instruction_and_newgame" class="hidden">
                 <button id="restart_button" class="button">
                     New game
                 </button>
@@ -36,7 +36,7 @@
         </div>
 
         <div class="board">
-            <div style="opacity: 0;" class="instruction">
+            <div style="opacity: 0;" id="instruction">
                 <h1 style="text-align: center;">How to play</h1>
                 <h2>How the game works</h2>
                 <p>You can move the board in for directions: up, down, left, right</p>
@@ -46,6 +46,7 @@
                 <h2>How to control</h2>
                 <p>You can press the <b>"Show keys"</b> button to show the arrow control on screen (for phone user)</p>
                 <p>Use your arrow keys (or the arrows on the screen) to move the tiles.</p>
+                <p>Use <b>New game</b> or (<b>"r"</b> key) to play a new game</p>
             </div>
 
             <div id="game_board" style="opacity: 1;">
@@ -85,7 +86,7 @@
             </div>
         </div>
 
-        <div class="control_arrow" style="display: none;">
+        <div class="control_arrow hidden"  style="opacity: 1;">
             <div class="first_row">
                     <img class = "arrow up" src="../../img/arrow.png" alt="arrow up">
             </div>
