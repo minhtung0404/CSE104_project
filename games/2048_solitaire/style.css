@@ -22,6 +22,8 @@ body{
     background-color: gray;
 
     user-select: none;
+
+    cursor: context-menu;
 }
 
 .card_number{
@@ -33,6 +35,8 @@ body{
     font-weight: bold;
     font-size: 20px;
     margin: 0px;
+
+    user-select: none;
 }
 
 #body{
@@ -118,6 +122,8 @@ body{
 }
 
 .card_tail{
+    cursor: context-menu;
+
     position: absolute;
     width: 90px;
     height: 120px;
