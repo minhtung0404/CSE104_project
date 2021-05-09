@@ -15,10 +15,27 @@ const cardColor = {
 }
 
 let maxCard = 3;
+var discard = document.querySelector('#discard');
 
 main()
 
 function main() {
+  /*
+  Restart button
+  */
+  const restartButton = document.querySelector("#restart_button");
+  restartButton.addEventListener('click', restart);
+  /*
+  Discard
+  */
+  discard.addEventListener('dragenter', discard_dragEnter);
+  discard.addEventListener('dragover', discard_dragOver);
+  discard.addEventListener('dragleave', discard_dragLeave);
+  discard.addEventListener('drop', discard_drop);
+
+  /*
+  Drag and drop cards
+  */
   const card = document.querySelector("#two");
   card.addEventListener('dragstart', dragStart);
   card.addEventListener('dragend', dragEnd);
@@ -29,6 +46,62 @@ function main() {
     cur.addEventListener('dragleave', dragLeave);
     cur.addEventListener('drop', drop);
   });
+}
+
+function discard_dragEnter(e) {
+  if (discard !== e.target) return;
+  e.preventDefault();
+  e.target.classList.add('drag-over');
+}
+
+function discard_dragOver(e) {
+  if (discard !== e.target) return;
+  e.preventDefault();
+  e.target.classList.add('drag-over');
+}
+
+function discard_dragLeave(e) {
+  if (discard !== e.target) return;
+  e.target.classList.remove('drag-over');
+}
+
+function discard_drop(e) {
+  if (discard !== e.target) return;
+  e.target.classList.remove('drag-over');//forgot what this does but it's important to keep it here
+}
+
+function restart(event) {
+  const columns = document.querySelectorAll(".column");
+  for(const column of columns) {
+    console.log(column.children.length);
+    while (column.children.length > 1)
+      column.removeChild(column.lastChild);
+    column.children[0].classList.add('cur');
+  }
+  let one = document.querySelector("#oneCard");
+  one.textContent = 2;
+  let two = document.querySelector("#twoCard");
+  two.textContent = 2;
+  /*one = document.querySelector("#one");
+  one.style.background = 'grey';
+  two = document.querySelector("#two");
+  two.style.background = 'grey';*/
+  const score = document.querySelector("#score_number");
+  score.textContent = 0;
+  const curs = document.querySelectorAll('.cur');
+  curs.forEach(cur => {
+    cur.addEventListener('dragenter', dragEnter);
+    cur.addEventListener('dragover', dragOver);
+    cur.addEventListener('dragleave', dragLeave);
+    cur.addEventListener('drop', drop);
+  });
+}
+
+function dragStart(e) {
+  console.log('dragStart');
+  setTimeout(() => {
+        e.target.classList.add('hide');
+    });
 }
 
 function dragEnd(e) {
@@ -114,13 +187,6 @@ function drop(e) {
   e.target.removeEventListener('drop', drop);
 }
 
-function dragStart(e) {
-  console.log('dragStart');
-  setTimeout(() => {
-        e.target.classList.add('hide');
-    });
-}
-
 function generateCard(maxCard) {
   /*
   Generate a new card everytime a card is placed.
@@ -140,7 +206,6 @@ function generateCard(maxCard) {
   /*
   New card at position one.
   */
-  console.log('lmao');
   newCard = document.querySelector("#one");
   const num = Math.pow(2, getRandomInt(maxCard - 1) + 1);
   newCard.style.background = cardColor[num];
