@@ -82,10 +82,10 @@ function restart(event) {
   one.textContent = 2;
   let two = document.querySelector("#twoCard");
   two.textContent = 2;
-  /*one = document.querySelector("#one");
+  one = document.querySelector("#one");
   one.style.background = 'grey';
   two = document.querySelector("#two");
-  two.style.background = 'grey';*/
+  two.style.background = 'grey';
   const score = document.querySelector("#score_number");
   score.textContent = 0;
   const curs = document.querySelectorAll('.cur');
@@ -98,7 +98,7 @@ function restart(event) {
 }
 
 function dragStart(e) {
-  console.log('dragStart');
+  //console.log('dragStart');
   setTimeout(() => {
         e.target.classList.add('hide');
     });
@@ -106,7 +106,7 @@ function dragStart(e) {
 
 function dragEnd(e) {
   const lmao = e.dataTransfer.dropEffect;
-  console.log(lmao);
+  //console.log(lmao);
   if (lmao == "none")//we keep the same card
     e.target.classList.remove('hide');
   else {//we replace with new card
@@ -129,26 +129,36 @@ function dragEnd(e) {
 }
 
 function dragEnter(e) {
-  console.log('dragOver');
+//  console.log('dragEnter');
+  if (e.target.tagName != "DIV")
+    return ;
   e.preventDefault();
   e.target.classList.add('drag-over');
 }
 
 function dragOver(e) {
-  console.log('dragOver');
+  //console.log('dragOver');
+  if (e.target.tagName != "DIV")
+    return ;
+  console.log(e.target.tagName);
   e.preventDefault();
   e.target.classList.add('drag-over');
 }
 
 function dragLeave(e) {
-  console.log('dragLeave');
+  if (e.target.tagName != "DIV")
+    return ;
+  //console.log(e.target.tagName);
+  //console.log('dragLeave');
   e.target.classList.remove('drag-over');
 }
 
 function drop(e) {
-  console.log('drop');
+  //console.log('drop');
 
   const card = document.querySelector("#two");//card that we have
+  if (e.target.tagName != "DIV")
+    return ;
   const len = e.currentTarget.style.top.length;
   let top = Number(e.currentTarget.style.top.slice(0, len - 2));//we inspect the top attribute
 
@@ -170,7 +180,7 @@ function drop(e) {
   if (e.currentTarget.getAttribute("top") == "1")
     top = -30;
   card.style.top = `${top + 30}px`;
-  card.top = 0;
+
   card.style.left = "";
   card.setAttribute("value", e.target.getAttribute('value'));
 
@@ -185,6 +195,69 @@ function drop(e) {
   e.target.removeEventListener('dragover', dragOver);
   e.target.removeEventListener('dragleave', dragLeave);
   e.target.removeEventListener('drop', drop);
+  let times = 0;
+
+  while (1) {
+    const children = column.children;
+    const n = children.length;
+    times += 1;
+    //console.log('children', column.children.length);
+    if (times <= 2) {
+      //console.log(times, 'hahah', (n == 2));
+    }
+    else {
+      break;
+    }
+    let lastCardNum = Number(children[n - 1].children[0].textContent);
+    let prevCardNum = Number(children[n - 2].children[0].textContent);
+    //console.log(children.length, n, prevCardNum, lastCardNum);
+    if (lastCardNum == prevCardNum) {//the cards propagating upward
+      prevCardNum = prevCardNum + lastCardNum;
+      const len = children[n - 2].style.top.length;
+      const lim = Number(children[n - 2].style.top.slice(0, len - 2));
+      const cardMove = function(curTime) {
+        cardMoveUp(curTime, lim, prevCardNum, e.target.getAttribute('value'), times);
+      };
+      //onsole.log(times, 'wtf');
+      requestAnimationFrame(cardMove);
+      /*
+      */
+      function cardMoveUp(curTime, lim, prevCardNum, type, times) {
+        console.log('wtf', times);
+        const column = document.querySelector(`#c${type}`);
+        const card = column.lastChild;
+        const cardsColumn = column.children;
+        //console.log('The number of child', cardsColumn.length);
+        //for (let k = 0; k < cardsColumn.length; k++) {
+        //  console.log(`Top of element[${k}]: `, cardsColumn[k].style.top);
+        //}
+        //console.log(card.style.top, lim);
+        const len = card.style.top.length;
+        const curTop = Number(card.style.top.slice(0, len - 2));
+        console.log(curTop);
+        card.style.top = `${curTop - 3}px`;
+        if (curTop - 3 > lim)
+           requestAnimationFrame(cardMove);
+        else {
+          console.log('lmao');
+          column.removeChild(column.lastChild);
+          const prevCard = column.lastChild;
+          prevCard.children[0].textContent = String(prevCardNum);
+          prevCard.style.background = cardColor[prevCardNum];
+          prevCard.addEventListener('dragenter', dragEnter);
+          prevCard.addEventListener('dragover', dragOver);
+          prevCard.addEventListener('dragleave', dragLeave);
+          prevCard.addEventListener('drop', drop);
+          prevCard.classList.add('cur');
+          //console.log(times, 'sdgsdg', column.children.length);
+          //console.log(children.length);
+        }
+      }
+      //break;
+    }
+    else
+      break;
+  }
 }
 
 function generateCard(maxCard) {
