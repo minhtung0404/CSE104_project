@@ -33,40 +33,17 @@
         </div>
 
         <div id="body">
-            <div class="column">
-                <div class="card">
-                    <p class="card_number">2</p>
-                </div>
-                <div class="card" style="top: 30px;">
-                    <p class="card_number">4</p>
-                </div>
-                <div class="card" style="top: 60px;">
-                    <p class="card_number">8</p>
-                </div>
-                <div class="card" style="top: 90px;">
-                    <p class="card_number">16</p>
-                </div>
-                <div class="card" style="top: 120px;">
-                    <p class="card_number">32</p>
-                </div>
-                <div class="card" style="top: 150px;">
-                    <p class="card_number">64</p>
-                </div>
-                <div class="card" style="top: 180px;">
-                    <p class="card_number">128</p>
-                </div>
-                <div class="card" style="top: 210px;">
-                    <p class="card_number">256</p>
-                </div>
+            <div class="column" id = "c1">
+                <div class="card cur" style="top: 0px;" value = "1" top = 1></div>
             </div>
-            <div class="column">
-                <div class="card"></div>
+            <div class="column" id = "c2">
+                <div class="card cur" style="top: 0px;" value = "2" top = 1></div>
             </div>
-            <div class="column">
-                <div class="card"></div>
+            <div class="column" id = "c3">
+                <div class="card cur" style="top: 0px;" value = "3" top = 1></div>
             </div>
-            <div class="column">
-                <div class="card"></div>
+            <div class="column" id = "c4">
+                <div class="card cur" style="top: 0px;" value = "4" top = 1></div>
             </div>
         </div>
 
@@ -74,13 +51,13 @@
           <div id = "one" class="card_tail" style="left: 50px;">
               <p id = "oneCard" class="card_number">2</p>
           </div>
-          <div id = "two" class="card_tail" style="left: 100px;">
-              <p id = "twoCard" class="card_number">2</p>
-          </div>
           <div class="card_tail" style="left: 230px;">
               <p class="card_tail_X">X</p>
               <p class="card_tail_discard" style = "top: 48px">DISCARD</p>
               <p class="card_tail_X" style = "top: 65px;">X</p>
+          </div>
+          <div id = "two" class="card_tail" style="left: 100px;" draggable="true">
+              <p id = "twoCard" class="card_number">2</p>
           </div>
         </div>
     </div>
