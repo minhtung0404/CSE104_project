@@ -20,6 +20,8 @@ body{
     border-radius: 15px;
 
     background-color: gray;
+
+    user-select: none;
 }
 
 .card_number{
@@ -71,6 +73,8 @@ body{
 }
 
 #score_number{
+    user-select: none;
+
     font-size: 40px;
     font-weight: bold;
     margin: 0px;
@@ -91,6 +95,7 @@ body{
 }
 
 #best_score_number{
+    user-select: none;
     display: inline-block;
     color: white;
     margin: 0px;
@@ -123,6 +128,8 @@ body{
     border-radius: 15px;
 
     background-color: gray;
+
+    user-select: none;
 }
 
 .card_tail_X {
@@ -156,4 +163,22 @@ body{
   background: yellow;
   display: inline-flex;
   flex-direction: row;
+}
+
+.hide {
+    display: none;
+    cursor: context-menu;
+}
+
+.drag-over {
+  cursor: context-menu;
+  border: solid 2px white;
+}
+
+#how_to_play{
+  user-select: none;
+}
+
+#restart_button{
+  user-select: none;
 }
