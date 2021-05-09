@@ -165,7 +165,8 @@ function drop(e) {
   e.target.classList.remove('cur');
   card.classList.add('cur');//the new card is now the current card in our column
 
-  const column = document.querySelector(`#c${e.target.getAttribute('value')}`);
+  const value = e.target.getAttribute('value');//the current column
+  var column = document.querySelector(`#c${value}`);
   column.appendChild(card);//add this card to the right column
 
   /*
@@ -195,68 +196,60 @@ function drop(e) {
   e.target.removeEventListener('dragover', dragOver);
   e.target.removeEventListener('dragleave', dragLeave);
   e.target.removeEventListener('drop', drop);
-  let times = 0;
 
-  while (1) {
-    const children = column.children;
-    const n = children.length;
-    times += 1;
-    //console.log('children', column.children.length);
-    if (times <= 2) {
-      //console.log(times, 'hahah', (n == 2));
-    }
-    else {
-      break;
-    }
-    let lastCardNum = Number(children[n - 1].children[0].textContent);
-    let prevCardNum = Number(children[n - 2].children[0].textContent);
-    //console.log(children.length, n, prevCardNum, lastCardNum);
-    if (lastCardNum == prevCardNum) {//the cards propagating upward
-      prevCardNum = prevCardNum + lastCardNum;
-      const len = children[n - 2].style.top.length;
-      const lim = Number(children[n - 2].style.top.slice(0, len - 2));
-      const cardMove = function(curTime) {
-        cardMoveUp(curTime, lim, prevCardNum, e.target.getAttribute('value'), times);
-      };
-      //onsole.log(times, 'wtf');
+  var children = column.children;
+  var n = children.length;
+
+  if (n == 2)//the case where there's only one card.
+    return ;
+
+  let lastCardNum = Number(children[n - 1].children[0].textContent);
+  let prevCardNum = Number(children[n - 2].children[0].textContent);
+  
+  if (lastCardNum == prevCardNum) {//the cards propagating upward
+      prevCardNum = prevCardNum * 2;
       requestAnimationFrame(cardMove);
-      /*
-      */
-      function cardMoveUp(curTime, lim, prevCardNum, type, times) {
-        console.log('wtf', times);
-        const column = document.querySelector(`#c${type}`);
+      function cardMove(curTime) {
+        /*
+        curTime: current execution time.
+        limTop: the top of the previous card.
+        prevCardNum: the new card number.
+        */
+        const newNum = Number(children[n - 1].children[0].textContent) * 2;
+        const limTop = Number(children[n - 2].style.top.slice(0, children[n - 2].style.top.length - 2));
+        const column = document.querySelector(`#c${value}`);
         const card = column.lastChild;
         const cardsColumn = column.children;
-        //console.log('The number of child', cardsColumn.length);
-        //for (let k = 0; k < cardsColumn.length; k++) {
-        //  console.log(`Top of element[${k}]: `, cardsColumn[k].style.top);
-        //}
-        //console.log(card.style.top, lim);
         const len = card.style.top.length;
         const curTop = Number(card.style.top.slice(0, len - 2));
-        console.log(curTop);
+
         card.style.top = `${curTop - 3}px`;
-        if (curTop - 3 > lim)
+        if (curTop - 3 > limTop)
            requestAnimationFrame(cardMove);
         else {
-          console.log('lmao');
+          console.log(newNum);
           column.removeChild(column.lastChild);
           const prevCard = column.lastChild;
-          prevCard.children[0].textContent = String(prevCardNum);
-          prevCard.style.background = cardColor[prevCardNum];
+          prevCard.children[0].textContent = String(newNum);
+          prevCard.style.background = cardColor[newNum];
           prevCard.addEventListener('dragenter', dragEnter);
           prevCard.addEventListener('dragover', dragOver);
           prevCard.addEventListener('dragleave', dragLeave);
           prevCard.addEventListener('drop', drop);
           prevCard.classList.add('cur');
-          //console.log(times, 'sdgsdg', column.children.length);
-          //console.log(children.length);
+
+          children = column.children;
+          n = children.length;
+          if (n == 2)
+            return ;
+
+          lastCardNum = Number(children[n - 1].children[0].textContent);
+          prevCardNum = Number(children[n - 2].children[0].textContent);
+
+          if (lastCardNum == prevCardNum)
+            requestAnimationFrame(cardMove);
         }
       }
-      //break;
-    }
-    else
-      break;
   }
 }
 
