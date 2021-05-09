@@ -2,14 +2,20 @@
 
 Author: Long Vu + Tung Nguyen
 
-## Introduction
+## Table of content
+
+- [Introduction](#introduction)
+- [The original `2048` game](#first-game)
+- [2048 Solitaire](#second-game)
+
+## Introduction <a name="introduction"></a>
 
 This client-side website is inspired by the very famous game `2048`. The `2048 series` contains two games (maybe we will add more game later):
 
 - The original `2048`.
 - `2048 Solitaire` - a combination of `2048` and another famous game - `Solitaire`.
 
-## The original `2048` game.
+## The original `2048` game <a name="first-game"></a>
 
 ### Game state
 
@@ -34,3 +40,5 @@ We created a `How to play` button. Whenever we hover on the button, the board wi
 ### Show keys option
 
 To make the game avaiable with only a mouse or for playing with a phone, we added arrows key to the game. You can show or hide the key by pressing the `Show keys` button. The key is one arrow image and its rotation.
+
+## `2048 Solitaire` <a name="second-game"></a>
