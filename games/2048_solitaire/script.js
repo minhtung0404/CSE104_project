@@ -14,7 +14,7 @@ const cardColor = {
   2048: 'Gold',
 }
 
-let maxCard = 3;
+var maxCard = 3;
 var discard = document.querySelector('#discard');
 
 main()
@@ -73,7 +73,6 @@ function discard_drop(e) {
 function restart(event) {
   const columns = document.querySelectorAll(".column");
   for(const column of columns) {
-    console.log(column.children.length);
     while (column.children.length > 1)
       column.removeChild(column.lastChild);
     column.children[0].classList.add('cur');
@@ -129,6 +128,15 @@ function dragEnd(e) {
 }
 
 function dragEnter(e) {
+  const value = e.target.getAttribute('value');//the current column
+  var column = document.querySelector(`#c${value}`);
+  const card = document.querySelector("#two");//card that we have
+
+  if (column.children.length == 9) {
+    if (card.children[0].textContent != e.target.children[0].textContent)
+      return ;
+  }
+
 //  console.log('dragEnter');
   if (e.target.tagName != "DIV")
     return ;
@@ -137,15 +145,33 @@ function dragEnter(e) {
 }
 
 function dragOver(e) {
+  const value = e.target.getAttribute('value');//the current column
+  var column = document.querySelector(`#c${value}`);
+  const card = document.querySelector("#two");//card that we have
+
+  if (column.children.length == 9) {
+    if (card.children[0].textContent != e.target.children[0].textContent)
+      return ;
+  }
+
   //console.log('dragOver');
   if (e.target.tagName != "DIV")
     return ;
-  console.log(e.target.tagName);
+  //console.log(e.target.tagName);
   e.preventDefault();
   e.target.classList.add('drag-over');
 }
 
 function dragLeave(e) {
+  const value = e.target.getAttribute('value');//the current column
+  var column = document.querySelector(`#c${value}`);
+  const card = document.querySelector("#two");//card that we have
+
+  if (column.children.length == 9) {
+    if (card.children[0].textContent != e.target.children[0].textContent)
+      return ;
+  }
+
   if (e.target.tagName != "DIV")
     return ;
   //console.log(e.target.tagName);
@@ -155,8 +181,14 @@ function dragLeave(e) {
 
 function drop(e) {
   //console.log('drop');
-
+  const value = e.target.getAttribute('value');//the current column
+  var column = document.querySelector(`#c${value}`);
   const card = document.querySelector("#two");//card that we have
+
+  if (column.children.length == 9) {
+    if (card.children[0].textContent != e.target.children[0].textContent)
+      return ;
+  }
   if (e.target.tagName != "DIV")
     return ;
   const len = e.currentTarget.style.top.length;
@@ -165,8 +197,6 @@ function drop(e) {
   e.target.classList.remove('cur');
   card.classList.add('cur');//the new card is now the current card in our column
 
-  const value = e.target.getAttribute('value');//the current column
-  var column = document.querySelector(`#c${value}`);
   column.appendChild(card);//add this card to the right column
 
   /*
@@ -203,23 +233,15 @@ function drop(e) {
   if (n == 2)//the case where there's only one card.
     return ;
 
-  let lastCardNum = Number(children[n - 1].children[0].textContent);
-  let prevCardNum = Number(children[n - 2].children[0].textContent);
-  
-  if (lastCardNum == prevCardNum) {//the cards propagating upward
-      prevCardNum = prevCardNum * 2;
+  if (Number(children[n - 1].children[0].textContent) == Number(children[n - 2].children[0].textContent)) {
+    //the cards propagating upward
       requestAnimationFrame(cardMove);
       function cardMove(curTime) {
-        /*
-        curTime: current execution time.
-        limTop: the top of the previous card.
-        prevCardNum: the new card number.
-        */
         const newNum = Number(children[n - 1].children[0].textContent) * 2;
         const limTop = Number(children[n - 2].style.top.slice(0, children[n - 2].style.top.length - 2));
-        const column = document.querySelector(`#c${value}`);
+        maxCard = Math.max(maxCard, Math.log2(newNum));
+
         const card = column.lastChild;
-        const cardsColumn = column.children;
         const len = card.style.top.length;
         const curTop = Number(card.style.top.slice(0, len - 2));
 
@@ -227,7 +249,6 @@ function drop(e) {
         if (curTop - 3 > limTop)
            requestAnimationFrame(cardMove);
         else {
-          console.log(newNum);
           column.removeChild(column.lastChild);
           const prevCard = column.lastChild;
           prevCard.children[0].textContent = String(newNum);
@@ -238,15 +259,11 @@ function drop(e) {
           prevCard.addEventListener('drop', drop);
           prevCard.classList.add('cur');
 
-          children = column.children;
           n = children.length;
           if (n == 2)
             return ;
 
-          lastCardNum = Number(children[n - 1].children[0].textContent);
-          prevCardNum = Number(children[n - 2].children[0].textContent);
-
-          if (lastCardNum == prevCardNum)
+          if (Number(children[n - 1].children[0].textContent) == Number(children[n - 2].children[0].textContent))
             requestAnimationFrame(cardMove);
         }
       }
@@ -256,6 +273,7 @@ function drop(e) {
 function generateCard(maxCard) {
   /*
   Generate a new card everytime a card is placed.
+  The range is from 1 to maxCard.
   */
   function getRandomInt(num) {
     return Math.floor(Math.random() * num);
@@ -273,7 +291,7 @@ function generateCard(maxCard) {
   New card at position one.
   */
   newCard = document.querySelector("#one");
-  const num = Math.pow(2, getRandomInt(maxCard - 1) + 1);
+  const num = Math.pow(2, getRandomInt(Math.min(maxCard, 6)) + 1);
   newCard.style.background = cardColor[num];
   newCard = document.querySelector("#oneCard");
   newCard.textContent = num;
