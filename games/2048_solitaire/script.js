@@ -14,6 +14,19 @@ const cardColor = {
   2048: 'Gold',
 }
 
+const bonusColor = {
+  2 : 'blue',
+  3 : 'orange',
+  4 : 'red',
+  5 : 'green',
+  6 : 'purple',
+  7 : 'cyan',
+  8 : 'gold',
+}
+
+let score_number = Number(document.querySelector('#score_number').textContent);
+let best_score_number = Number(document.querySelector('#best_score_number').textContent);
+
 var maxCard = 3;
 var discard = document.querySelector('#discard');
 
@@ -73,9 +86,9 @@ function discard_drop(e) {
 function restart(event) {
   const columns = document.querySelectorAll(".column");
   for(const column of columns) {
-    while (column.children.length > 1)
+    while (column.children.length > 2)
       column.removeChild(column.lastChild);
-    column.children[0].classList.add('cur');
+    column.children[1].classList.add('cur');
   }
   let one = document.querySelector("#oneCard");
   one.textContent = 2;
@@ -128,52 +141,54 @@ function dragEnd(e) {
 }
 
 function dragEnter(e) {
+  if (e.target.tagName != "DIV")
+    return ;
   const value = e.target.getAttribute('value');//the current column
   var column = document.querySelector(`#c${value}`);
   const card = document.querySelector("#two");//card that we have
 
-  if (column.children.length == 9) {
+  if (column.children.length == 10) {
     if (card.children[0].textContent != e.target.children[0].textContent)
       return ;
   }
 
 //  console.log('dragEnter');
-  if (e.target.tagName != "DIV")
-    return ;
   e.preventDefault();
   e.target.classList.add('drag-over');
 }
 
 function dragOver(e) {
+  if (e.target.tagName != "DIV")
+    return ;
+
   const value = e.target.getAttribute('value');//the current column
   var column = document.querySelector(`#c${value}`);
   const card = document.querySelector("#two");//card that we have
 
-  if (column.children.length == 9) {
+  if (column.children.length == 10) {
     if (card.children[0].textContent != e.target.children[0].textContent)
       return ;
   }
 
   //console.log('dragOver');
-  if (e.target.tagName != "DIV")
-    return ;
   //console.log(e.target.tagName);
   e.preventDefault();
   e.target.classList.add('drag-over');
 }
 
 function dragLeave(e) {
+  if (e.target.tagName != "DIV")
+    return ;
+
   const value = e.target.getAttribute('value');//the current column
   var column = document.querySelector(`#c${value}`);
   const card = document.querySelector("#two");//card that we have
 
-  if (column.children.length == 9) {
+  if (column.children.length == 19) {
     if (card.children[0].textContent != e.target.children[0].textContent)
       return ;
   }
 
-  if (e.target.tagName != "DIV")
-    return ;
   //console.log(e.target.tagName);
   //console.log('dragLeave');
   e.target.classList.remove('drag-over');
@@ -181,16 +196,16 @@ function dragLeave(e) {
 
 function drop(e) {
   //console.log('drop');
+  if (e.target.tagName != "DIV")
+    return ;
   const value = e.target.getAttribute('value');//the current column
   var column = document.querySelector(`#c${value}`);
   const card = document.querySelector("#two");//card that we have
 
-  if (column.children.length == 9) {
+  if (column.children.length == 10) {
     if (card.children[0].textContent != e.target.children[0].textContent)
       return ;
   }
-  if (e.target.tagName != "DIV")
-    return ;
   const len = e.currentTarget.style.top.length;
   let top = Number(e.currentTarget.style.top.slice(0, len - 2));//we inspect the top attribute
 
@@ -230,25 +245,47 @@ function drop(e) {
   var children = column.children;
   var n = children.length;
 
-  if (n == 2)//the case where there's only one card.
+  if (n == 3)//the case where there's only one card.
     return ;
 
   if (Number(children[n - 1].children[0].textContent) == Number(children[n - 2].children[0].textContent)) {
     //the cards propagating upward
+      let bonus = 1;
       requestAnimationFrame(cardMove);
       function cardMove(curTime) {
         const newNum = Number(children[n - 1].children[0].textContent) * 2;
+
         const limTop = Number(children[n - 2].style.top.slice(0, children[n - 2].style.top.length - 2));
         maxCard = Math.max(maxCard, Math.log2(newNum));
+        //console.log(bonus);
+
+        if (bonus >= 2) {
+          const box = document.querySelector(`#box${value}`);
+          box.children[0].textContent = `${bonus}x`;
+          box.style.top = `${limTop + 40}px`;
+          box.style.display = "block";
+          box.style.background = bonusColor[bonus];
+        }
 
         const card = column.lastChild;
         const len = card.style.top.length;
         const curTop = Number(card.style.top.slice(0, len - 2));
 
-        card.style.top = `${curTop - 3}px`;
-        if (curTop - 3 > limTop)
+        card.style.top = `${curTop - 1.8}px`;
+        if (curTop - 1.8 > limTop)
            requestAnimationFrame(cardMove);
         else {
+          const box = document.querySelector(`#box${value}`);
+          box.style.top = `${0}px`;
+          box.style.display = "none";
+
+          score_number += newNum * bonus;
+          best_score_number = Math.max(best_score_number, score_number);
+          const score = document.querySelector('#score_number');
+          score.textContent = String(score_number);
+          const best_score = document.querySelector('#best_score_number');
+          best_score.textContent = String(best_score_number);
+          console.log(bonus);
           column.removeChild(column.lastChild);
           const prevCard = column.lastChild;
           prevCard.children[0].textContent = String(newNum);
@@ -260,11 +297,13 @@ function drop(e) {
           prevCard.classList.add('cur');
 
           n = children.length;
-          if (n == 2)
+          if (n == 3)
             return ;
 
-          if (Number(children[n - 1].children[0].textContent) == Number(children[n - 2].children[0].textContent))
+          if (Number(children[n - 1].children[0].textContent) == Number(children[n - 2].children[0].textContent)) {
+            bonus += 1;
             requestAnimationFrame(cardMove);
+          }
         }
       }
   }

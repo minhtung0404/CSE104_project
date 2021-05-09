@@ -26,6 +26,31 @@ body{
     cursor: context-menu;
 }
 
+.bonus_box {
+  position: absolute;
+  z-index: 3;
+
+  width: 40px;
+  height: 30px;
+
+  background: pink;
+
+  text-align: center;
+  color: white;
+
+  font-size: 1em;
+
+  display: none;
+  
+  border-radius: 5px;
+  border: solid 2px;
+}
+
+.bonus {
+  margin: 0px;
+  font-size: 1.5em;
+}
+
 .card_number{
     position: absolute;
     top: 5px;
