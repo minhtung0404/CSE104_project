@@ -34,6 +34,7 @@ body{
 table{
     width: 400px;
     height: 400px;
+    pointer-events: none;
 }
 
 .cell{
@@ -50,10 +51,6 @@ table{
     justify-content: center;
 
     font-size: 30px;
-}
-
-table{
-    pointer-events: none;
 }
 
 .board{
@@ -124,13 +121,10 @@ h1, h2{
 .first_row, .second_row, .third_row{
     display: flex;
     flex-direction: row;
+    text-align: center;
 
     justify-content: center;
     width: 180px;
-}
-
-.first_row, .third_row{
-    text-align: center;
 }
 
 .up{
