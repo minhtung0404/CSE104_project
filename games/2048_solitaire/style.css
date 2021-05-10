@@ -41,7 +41,7 @@ body{
   font-size: 1em;
 
   display: none;
-  
+
   border-radius: 5px;
   border: solid 2px;
 }
@@ -212,4 +212,42 @@ body{
 
 #restart_button{
   user-select: none;
+}
+
+#win {
+  display: none;
+  position: relative;
+  width: 400px;
+  height: 330px;
+  background: rgba(0, 0, 0, 0.5);
+  color: gold;
+  font-size: 500%;
+  text-align: center;
+}
+
+#win p {
+  position: absolute;
+  top: 100px;
+  left: 25px;
+  text-align: center;
+  margin: 0px;
+}
+
+#lose {
+  display: none;
+  position: relative;
+  width: 400px;
+  height: 330px;
+  background: rgba(0, 0, 0, 0.5);
+  color: grey;
+  font-size: 500%;
+  text-align: center;
+}
+
+#lose p {
+  position: absolute;
+  top: 100px;
+  left: 15px;
+  text-align: center;
+  margin: 0px;
 }

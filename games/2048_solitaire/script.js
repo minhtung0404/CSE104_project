@@ -24,6 +24,8 @@ const bonusColor = {
   8 : 'gold',
 }
 
+const myStorage = window.localStorage;
+
 let score_number = Number(document.querySelector('#score_number').textContent);
 let best_score_number = Number(document.querySelector('#best_score_number').textContent);
 
@@ -33,6 +35,12 @@ var discard = document.querySelector('#discard');
 main()
 
 function main() {
+  if (myStorage.getItem("maxScore") !== null) {
+      const maxScore = JSON.parse(myStorage.getItem("maxScore"));
+      const best_score = document.querySelector('#best_score_number');
+      best_score.textContent = String(maxScore);
+      best_score_number = Number(document.querySelector('#best_score_number').textContent);
+  }
   /*
   Restart button
   */
@@ -107,6 +115,14 @@ function restart(event) {
     cur.addEventListener('dragleave', dragLeave);
     cur.addEventListener('drop', drop);
   });
+  for(const column of columns)
+    column.style.display = "block";
+  const win = document.querySelector("#win");
+  win.style.display = "none";
+  const lose = document.querySelector("#lose");
+  lose.style.display = "none";
+  const card = document.querySelector("#two");
+  card.setAttribute("draggable", "true");
 }
 
 function dragStart(e) {
@@ -137,6 +153,10 @@ function dragEnd(e) {
     newCard.addEventListener('dragstart', dragStart);
     newCard.addEventListener('dragend', dragEnd);
     generateCard(maxCard);
+    if (maxCard >= 11)
+      setTimeout(checkWin, 1700);
+    else
+      setTimeout(checkLose, 2000);
   }
 }
 
@@ -184,7 +204,7 @@ function dragLeave(e) {
   var column = document.querySelector(`#c${value}`);
   const card = document.querySelector("#two");//card that we have
 
-  if (column.children.length == 19) {
+  if (column.children.length == 10) {
     if (card.children[0].textContent != e.target.children[0].textContent)
       return ;
   }
@@ -280,12 +300,14 @@ function drop(e) {
           box.style.display = "none";
 
           score_number += newNum * bonus;
-          best_score_number = Math.max(best_score_number, score_number);
           const score = document.querySelector('#score_number');
           score.textContent = String(score_number);
-          const best_score = document.querySelector('#best_score_number');
-          best_score.textContent = String(best_score_number);
-          console.log(bonus);
+          if (score_number > best_score_number) {
+            best_score_number = Math.max(best_score_number, score_number);
+            const best_score = document.querySelector('#best_score_number');
+            best_score.textContent = String(best_score_number);
+            myStorage.setItem("maxScore", JSON.stringify(best_score_number));
+          }
           column.removeChild(column.lastChild);
           const prevCard = column.lastChild;
           prevCard.children[0].textContent = String(newNum);
@@ -297,6 +319,7 @@ function drop(e) {
           prevCard.classList.add('cur');
 
           n = children.length;
+
           if (n == 3)
             return ;
 
@@ -304,9 +327,41 @@ function drop(e) {
             bonus += 1;
             requestAnimationFrame(cardMove);
           }
+
         }
       }
   }
+  //checkLose();
+}
+
+function checkWin() {
+  const card = document.querySelector("#two");
+  card.setAttribute("draggable", "false");
+  const columns = document.querySelectorAll(".column");
+  for(const column of columns)
+    column.style.display = "None";
+  const win = document.querySelector("#win");
+  win.style.display = "block";
+}
+
+function checkLose() {
+  let ok = 1;
+  const columns = document.querySelectorAll(".column");
+  const card = document.querySelector("#two");
+  for(const column of columns)
+    if (column.children.length < 10)
+      ok = 0;
+    else {
+      if (column.lastChild.textContent == card.lastChild.textContent)
+        ok = 0;
+    }
+  if (ok == 0)
+    return ;
+  card.setAttribute("draggable", "false");
+  for(const column of columns)
+    column.style.display = "None";
+  const lose = document.querySelector("#lose");
+  lose.style.display = "block";
 }
 
 function generateCard(maxCard) {
