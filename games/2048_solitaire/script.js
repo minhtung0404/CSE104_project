@@ -107,7 +107,8 @@ function restart(event) {
   two = document.querySelector("#two");
   two.style.background = 'grey';
   const score = document.querySelector("#score_number");
-  score.textContent = 0;
+  score.textContent = "0";
+  score_number = Number(document.querySelector('#score_number').textContent);
   const curs = document.querySelectorAll('.cur');
   curs.forEach(cur => {
     cur.addEventListener('dragenter', dragEnter);
@@ -300,6 +301,7 @@ function drop(e) {
           box.style.display = "none";
 
           score_number += newNum * bonus;
+          console.log(score_number, newNum, bonus);
           const score = document.querySelector('#score_number');
           score.textContent = String(score_number);
           if (score_number > best_score_number) {
