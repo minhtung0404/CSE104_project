@@ -47,6 +47,8 @@ To make the game available with only a mouse or for playing with a phone, we add
 
 We represent the card using `div` and with the number inside using `p`. There are 4 columns corresponding to 4 blocks, inside each column, there's one div who is the bonus indicator who will appear later, another div that marks the bottom of a column for adding card. Each cards in the column has the distance of `30px` in their `top` attributes. Each time adding card to a column, we append the `div` card into each `div` column. We have a `New game` button who resets the game state by erasing the columns and a `How to play` button that shows the instruction. We have 2 cards at the bottom, id `one` and id `two`, each time a card is placed, we push id `one` to id `two` and generate a new random card for id `one`. We use the `drag and drop API` of `JavaScript` to implement the dragging and dropping effect of the cards.
 
+We also use `localStorage` to keep track of the maximum score.
+
 ### Merging cards
 
 Each time a new card is placed in a column, we check 2 bottom cards if they have the same numbers, and we merge them by deleting the last `div` and changing the number of the penultimate `div`. We use `requestAnimationFrame` to visualize the merging process, moving the `top` attribute of the last card by a marginal amount of `px` until it reaches the penultimate card, if at the end of the process 2 bottom cards still have the same number we call `requestAnimationFrame` again(`recursive` style). Also, we keep count of `bonus`, which is the time the merging process has taken place, and we have a small box indicating the bonus amount(`2x`, `3x`,...) with the `top` attribute `=` the `top` attribute of the penultimate card `+40px`.
