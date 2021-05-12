@@ -84,7 +84,7 @@ function howtoplay(event) {
   else {
     howtoplayState = 1 - howtoplayState;
     howtoplay.style.display = "none";
-    if (maxCard >= 5)
+    if (maxCard >= 11)
       CWin();
     else {
       let ok = 1;
@@ -173,7 +173,7 @@ function dragEnd(e) {
     e.target.classList.remove('hide');
 
     const card = document.querySelector("#two");
-    if (maxCard >= 5) {
+    if (maxCard >= 11) {
       card.setAttribute("draggable", "false");
       setTimeout(CWin, 1700);
     }
