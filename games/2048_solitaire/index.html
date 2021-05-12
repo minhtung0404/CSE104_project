@@ -26,13 +26,30 @@
                 <div id="score">
                     <p id="score_number">0</p>
                 </div>
-                <button id="how_to_play" class="button">
+                <button id="how_to_play_button" class="button">
                     How to play
                 </button>
             </div>
         </div>
 
         <div id="body">
+
+            <div id = "how_to_play">
+              <p><b>1)</b> You drag your cards into 4 columns, each columns can hold at most 8 cards, a card can only add to
+                a column of 8 cards if and only if it matches with the bottom card.
+                If you can't add anymore cards, you lose! </p>
+                <br>
+              <p><b>2)</b> Cards with the same number merge into one when they are connected. The sum of 2
+                merge cards add up to the score, if multiple cards are merged in a turn,
+                you will have bonuses! The first time is 1x, second time is 2x, third time is 3x,... </p>
+                <br>
+              <p><b>3)</b> <b>Your goal</b>: Make the 2048 card appears and with the best score as possible!</p>
+              <br>
+              <p><b>4)</b> Click <b>New game</b> to play a new game</p>
+              <br>
+              <p><b>5)</b> Click <b>How to play</b> again to play. </p>
+            </div>
+
             <div id = "win">
               <p>
                 You Win :)
@@ -46,41 +63,38 @@
             </div>
 
             <div class="column" id = "c1">
-                <div id = "box1" class = "bonus_box" value = "1" style = "left: 28px;">
+                <div id = "box1" class = "bonus_box" data-value = "1" style = "left: 28px;">
                   <p class= "bonus"> 2x </p>
                 </div>
-                <div class="card cur" style="top: 0px;" value = "1" top = 1></div>
+                <div class="card cur" style="top: 0px;" data-value = "1" data-top = 1></div>
             </div>
             <div class="column" id = "c2">
-                <div id = "box2" class = "bonus_box" value = "2" style = "left: 28px;">
+                <div id = "box2" class = "bonus_box" data-value = "2" style = "left: 28px;">
                   <p class= "bonus"> 2x </p>
                 </div>
-                <div class="card cur" style="top: 0px;" value = "2" top = 1></div>
+                <div class="card cur" style="top: 0px;" data-value = "2" data-top = 1></div>
             </div>
             <div class="column" id = "c3">
-                <div id = "box3" class = "bonus_box" value = "3" style = "left: 28px;">
+                <div id = "box3" class = "bonus_box" data-value = "3" style = "left: 28px;">
                   <p class= "bonus"> 2x </p>
                 </div>
-                <div class="card cur" style="top: 0px;" value = "3" top = 1></div>
+                <div class="card cur" style="top: 0px;" data-value = "3" data-top = 1></div>
             </div>
             <div class="column" id = "c4">
-                <div id = "box4" class = "bonus_box" value = "4" style = "left: 28px;">
+                <div id = "box4" class = "bonus_box" data-value = "4" style = "left: 28px;">
                   <p class= "bonus"> 2x </p>
                 </div>
-                <div class="card cur" style="top: 0px;" value = "4" top = 1></div>
+                <div class="card cur" style="top: 0px;" data-value = "4" data-top = 1></div>
             </div>
+
         </div>
 
         <div id="tail">
-          <div id = "one" class="card_tail" style="left: 0px;">
+          <div id = "one" class="card_tail" style="left: 100px;">
               <p id = "oneCard" class="card_number">2</p>
           </div>
-          <div id = "discard" class="card_tail" style="left: 230px;">
-              <p class="card_tail_X">X</p>
-              <p class="card_tail_discard" style = "top: 48px">DISCARD</p>
-              <p class="card_tail_X" style = "top: 65px;">X</p>
-          </div>
-          <div id = "two" class="card_tail" style="left: 100px;" draggable="true">
+
+          <div id = "two" class="card_tail" style="left: 200px;" draggable="true">
               <p id = "twoCard" class="card_number">2</p>
           </div>
         </div>

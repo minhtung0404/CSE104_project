@@ -12,7 +12,7 @@ const cardColor = {
   512: 'LightSkyBlue',
   1024: 'Magenta',
   2048: 'Gold',
-}
+};
 
 const bonusColor = {
   2 : 'blue',
@@ -22,17 +22,18 @@ const bonusColor = {
   6 : 'purple',
   7 : 'cyan',
   8 : 'gold',
-}
+};
 
 const myStorage = window.localStorage;
 
 let score_number = Number(document.querySelector('#score_number').textContent);
 let best_score_number = Number(document.querySelector('#best_score_number').textContent);
 
-var maxCard = 3;
-var discard = document.querySelector('#discard');
+let howtoplayState = 0;
 
-main()
+var maxCard = 3;
+
+main();
 
 function main() {
   if (myStorage.getItem("maxScore") !== null) {
@@ -46,13 +47,12 @@ function main() {
   */
   const restartButton = document.querySelector("#restart_button");
   restartButton.addEventListener('click', restart);
+
   /*
-  Discard
+  How to play button
   */
-  discard.addEventListener('dragenter', discard_dragEnter);
-  discard.addEventListener('dragover', discard_dragOver);
-  discard.addEventListener('dragleave', discard_dragLeave);
-  discard.addEventListener('drop', discard_drop);
+  const howtoplayButton = document.querySelector("#how_to_play_button");
+  howtoplayButton.addEventListener('click', howtoplay);
 
   /*
   Drag and drop cards
@@ -69,29 +69,54 @@ function main() {
   });
 }
 
-function discard_dragEnter(e) {
-  if (discard !== e.target) return;
-  e.preventDefault();
-  e.target.classList.add('drag-over');
-}
-
-function discard_dragOver(e) {
-  if (discard !== e.target) return;
-  e.preventDefault();
-  e.target.classList.add('drag-over');
-}
-
-function discard_dragLeave(e) {
-  if (discard !== e.target) return;
-  e.target.classList.remove('drag-over');
-}
-
-function discard_drop(e) {
-  if (discard !== e.target) return;
-  e.target.classList.remove('drag-over');//forgot what this does but it's important to keep it here
+function howtoplay(event) {
+  if (howtoplayState == 0) {
+    howtoplayState = 1 - howtoplayState;
+    const columns = document.querySelectorAll(".column");
+    for(const column of columns)
+      column.style.display = "none";
+    const win = document.querySelector("#win");
+    win.style.display = "none";
+    const lose = document.querySelector("#lose");
+    lose.style.display = "none";
+    const howtoplay = document.querySelector("#how_to_play");
+    howtoplay.style.display = "block";
+  }
+  else {
+    howtoplayState = 1 - howtoplayState;
+    const howtoplay = document.querySelector("#how_to_play");
+    howtoplay.style.display = "none";
+    if (maxCard >= 11)
+      checkWin();
+    else {
+      let ok = 1;
+      const columns = document.querySelectorAll(".column");
+      const card = document.querySelector("#two");
+      for(const column of columns) {
+        const n = column.children.length;
+        if (column.children.length < 10)
+          ok = 0;
+        else {
+          if (column.children[n - 1].textContent == column.children[n - 2].textContent)
+            ok = 0;
+          if (column.lastChild.textContent == card.lastChild.textContent)
+            ok = 0;
+        }
+      }
+      if (ok == 0) {
+        const columns = document.querySelectorAll(".column");
+        for(const column of columns)
+          column.style.display = "block";
+        return ;
+      }
+      checkLose();
+    }
+  }
 }
 
 function restart(event) {
+  const howtoplay = document.querySelector("#how_to_play");
+  howtoplay.style.display = "none";
   const columns = document.querySelectorAll(".column");
   for(const column of columns) {
     while (column.children.length > 2)
@@ -116,6 +141,7 @@ function restart(event) {
     cur.addEventListener('dragleave', dragLeave);
     cur.addEventListener('drop', drop);
   });
+  maxCard = 3;
   for(const column of columns)
     column.style.display = "block";
   const win = document.querySelector("#win");
@@ -127,22 +153,20 @@ function restart(event) {
 }
 
 function dragStart(e) {
-  //console.log('dragStart');
   setTimeout(() => {
         e.target.classList.add('hide');
     });
 }
 
 function dragEnd(e) {
-  const lmao = e.dataTransfer.dropEffect;
-  //console.log(lmao);
-  if (lmao == "none")//we keep the same card
+  const effect = e.dataTransfer.dropEffect;
+  if (effect == "none")//we keep the same card
     e.target.classList.remove('hide');
   else {//we replace with new card
     const newCard = document.createElement('div');
     newCard.id = "two";
     newCard.classList.add('card_tail');
-    newCard.style.left = "100px";
+    newCard.style.left = "200px";
     newCard.setAttribute("draggable", "true");
     const newNum = document.createElement('p');
     newNum.id = "twoCard";
@@ -154,17 +178,38 @@ function dragEnd(e) {
     newCard.addEventListener('dragstart', dragStart);
     newCard.addEventListener('dragend', dragEnd);
     generateCard(maxCard);
-    if (maxCard >= 11)
+    if (maxCard >= 11) {
+      const card = document.querySelector("#two");
+      card.setAttribute("draggable", "false");
       setTimeout(checkWin, 1700);
-    else
-      setTimeout(checkLose, 2000);
+    }
+    else {
+      let ok = 1;
+      const columns = document.querySelectorAll(".column");
+      const card = document.querySelector("#two");
+      for(const column of columns) {
+        const n = column.children.length;
+        if (column.children.length < 10)
+          ok = 0;
+        else {
+          if (column.children[n - 1].textContent == column.children[n - 2].textContent)
+            ok = 0;
+          if (column.lastChild.textContent == card.lastChild.textContent)
+            ok = 0;
+        }
+      }
+      if (ok == 0)
+        return ;
+      card.setAttribute("draggable", "false");
+      setTimeout(checkLose, 1500);
+    }
   }
 }
 
 function dragEnter(e) {
   if (e.target.tagName != "DIV")
     return ;
-  const value = e.target.getAttribute('value');//the current column
+  const value = e.target.getAttribute('data-value');//the current column
   var column = document.querySelector(`#c${value}`);
   const card = document.querySelector("#two");//card that we have
 
@@ -173,7 +218,6 @@ function dragEnter(e) {
       return ;
   }
 
-//  console.log('dragEnter');
   e.preventDefault();
   e.target.classList.add('drag-over');
 }
@@ -182,7 +226,7 @@ function dragOver(e) {
   if (e.target.tagName != "DIV")
     return ;
 
-  const value = e.target.getAttribute('value');//the current column
+  const value = e.target.getAttribute('data-value');//the current column
   var column = document.querySelector(`#c${value}`);
   const card = document.querySelector("#two");//card that we have
 
@@ -190,9 +234,6 @@ function dragOver(e) {
     if (card.children[0].textContent != e.target.children[0].textContent)
       return ;
   }
-
-  //console.log('dragOver');
-  //console.log(e.target.tagName);
   e.preventDefault();
   e.target.classList.add('drag-over');
 }
@@ -201,7 +242,7 @@ function dragLeave(e) {
   if (e.target.tagName != "DIV")
     return ;
 
-  const value = e.target.getAttribute('value');//the current column
+  const value = e.target.getAttribute('data-value');//the current column
   var column = document.querySelector(`#c${value}`);
   const card = document.querySelector("#two");//card that we have
 
@@ -210,16 +251,13 @@ function dragLeave(e) {
       return ;
   }
 
-  //console.log(e.target.tagName);
-  //console.log('dragLeave');
   e.target.classList.remove('drag-over');
 }
 
 function drop(e) {
-  //console.log('drop');
   if (e.target.tagName != "DIV")
     return ;
-  const value = e.target.getAttribute('value');//the current column
+  const value = e.target.getAttribute('data-value');//the current column
   var column = document.querySelector(`#c${value}`);
   const card = document.querySelector("#two");//card that we have
 
@@ -244,12 +282,12 @@ function drop(e) {
   card.children[0].removeAttribute('id');
   card.removeAttribute('id');
   card.removeAttribute("draggable");
-  if (e.currentTarget.getAttribute("top") == "1")
+  if (e.currentTarget.getAttribute("data-top") == "1")
     top = -30;
   card.style.top = `${top + 30}px`;
 
   card.style.left = "";
-  card.setAttribute("value", e.target.getAttribute('value'));
+  card.setAttribute("data-value", e.target.getAttribute('data-value'));
 
   e.target.classList.remove('drag-over');//forgot what this does but it's important to keep it here
   card.addEventListener('dragenter', dragEnter);
@@ -278,7 +316,6 @@ function drop(e) {
 
         const limTop = Number(children[n - 2].style.top.slice(0, children[n - 2].style.top.length - 2));
         maxCard = Math.max(maxCard, Math.log2(newNum));
-        //console.log(bonus);
 
         if (bonus >= 2) {
           const box = document.querySelector(`#box${value}`);
@@ -301,7 +338,6 @@ function drop(e) {
           box.style.display = "none";
 
           score_number += newNum * bonus;
-          console.log(score_number, newNum, bonus);
           const score = document.querySelector('#score_number');
           score.textContent = String(score_number);
           if (score_number > best_score_number) {
@@ -321,7 +357,12 @@ function drop(e) {
           prevCard.classList.add('cur');
 
           n = children.length;
-
+          if (maxCard >= 11) {
+            const card = document.querySelector("#two");
+            card.setAttribute("draggable", "false");
+            setTimeout(checkWin, 1700);
+            return ;
+          }
           if (n == 3)
             return ;
 
@@ -329,16 +370,12 @@ function drop(e) {
             bonus += 1;
             requestAnimationFrame(cardMove);
           }
-
         }
       }
   }
-  //checkLose();
 }
 
 function checkWin() {
-  const card = document.querySelector("#two");
-  card.setAttribute("draggable", "false");
   const columns = document.querySelectorAll(".column");
   for(const column of columns)
     column.style.display = "None";
@@ -347,19 +384,7 @@ function checkWin() {
 }
 
 function checkLose() {
-  let ok = 1;
   const columns = document.querySelectorAll(".column");
-  const card = document.querySelector("#two");
-  for(const column of columns)
-    if (column.children.length < 10)
-      ok = 0;
-    else {
-      if (column.lastChild.textContent == card.lastChild.textContent)
-        ok = 0;
-    }
-  if (ok == 0)
-    return ;
-  card.setAttribute("draggable", "false");
   for(const column of columns)
     column.style.display = "None";
   const lose = document.querySelector("#lose");
