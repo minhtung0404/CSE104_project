@@ -1,6 +1,6 @@
 # CSE104 project
 
-Author: Long Vu(2048 Solitaire) + Tung Nguyen(2048)
+Author: Long Vu(2048 Solitaire) + Tung Nguyen(2048 + main interface)
 
 ## Table of content
 
