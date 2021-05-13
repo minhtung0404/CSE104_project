@@ -221,7 +221,7 @@ function dragEnd(e) {
     generateCard(maxCard);
 
     const card = document.querySelector("#two");
-    if (maxCard >= 5) {
+    if (maxCard >= 11) {
       card.setAttribute("draggable", "false");
       setTimeout(CWin, 1700);
     }
@@ -410,7 +410,7 @@ function drop(e) {
 
           n = children.length;
 
-          if (maxCard >= 5) {
+          if (maxCard >= 11) {
             const card = document.querySelector("#two");
             card.setAttribute("draggable", "false");
             setTimeout(CWin, 1700);
