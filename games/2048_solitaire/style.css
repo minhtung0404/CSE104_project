@@ -191,7 +191,7 @@ body{
 
 .drag-over {
     cursor: context-menu;
-    border: solid 2px white;
+    border: solid 3px white;
 }
 
 #how_to_play{
