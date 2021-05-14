@@ -11,7 +11,7 @@ const cardColor = {
   256: 'LightSalmon',
   512: 'LightSkyBlue',
   1024: 'Magenta',
-  2058: 'Gold',
+  2048: 'Gold',
 };
 
 const bonusColor = {
