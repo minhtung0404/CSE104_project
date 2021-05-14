@@ -6,7 +6,7 @@ Author: Long Vu(2048 Solitaire) + Tung Nguyen(2048 + main interface)
 
 - [Introduction](#introduction)
 - [The original `2048` game](#first-game)
-- [2048 Solitaire](#second-game)
+- [`2048 Solitaire`](#second-game)
 
 ## Introduction <a name="introduction"></a>
 
